@@ -1,45 +1,24 @@
 import BookCreate from "./components/BookCreate";
 import BookList from "./components/BookList";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import useBookContext from "./hook/useBookContext";
+
 import "./app.css";
-import { fetchBooks, createBook, updateBook, deleteBook } from "./api";
 const App = () => {
-    const [books, setBooks] = useState([]);
-    const handleDelete = async (id) => {
-        const book = await deleteBook(id);
-        console.log(book);
-        setBooks(books.filter((item) => item.id !== book.id));
-    }
-
-    const handleCreate = async(term) => {
-        const book = await createBook(term);
-        if (book) setBooks([...books, book]);
-    };
-
-    const handleUpdate = async (id, term) => {
-        console.log({ id, term });
-        const book = await updateBook(id, term);
-        setBooks(
-            books.map((item) => item.id === book.id? book: item)
-        );
-    };
-    
+    const { getAllBooks } = useBookContext();
     useEffect(async () => {
-        const tams = await fetchBooks();
-        console.log(tams);
-        setBooks(tams);
+        getAllBooks();
     }, []);
-    
+
     return (
         <div className="wrapper">
             <div className="container">
                 <h1 className="text">READING BOOK</h1>
                 <div className="window">
-                    <BookList books={books} onDelete={handleDelete} onEdit={handleUpdate} />
+                    <BookList />
                 </div>
             </div>
-            <BookCreate onCreate={handleCreate} />
+            <BookCreate />
         </div>
     );
 };

@@ -8,7 +8,6 @@ export const createBook = async (term) => {
 
 export const fetchBooks = async () => {
     console.log(`${apiURL}/books`);
-
     const resp = await axios.get(`${apiURL}/books`);
     return resp.data;
 };
