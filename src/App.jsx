@@ -7,7 +7,7 @@ import "./app.css";
 const App = () => {
     const { getAllBooks } = useBookContext();
     useEffect(async () => {
-        getAllBooks();
+       await getAllBooks();
     }, []);
 
     return (

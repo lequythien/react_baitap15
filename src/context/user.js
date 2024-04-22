@@ -4,8 +4,9 @@ import { useState } from "react";
 
 const BookContext = createContext();
 
-const BookProvider = ({ children }) => {
-    const [books, setBooks] = useState([]);
+const UserProvider = ({ children }) => {
+    const [users, setUsers] = useState([]);
+    const [isLogin, setIsLogin] = useState([]);
     const handleDelete = async (id) => {
         const book = await deleteBook(id);
         console.log(book);
@@ -36,6 +37,7 @@ const BookProvider = ({ children }) => {
         onCreate: handleCreate,
         getAllBooks,
         books,
+        isLogin,
     };
 
     return (
@@ -43,5 +45,5 @@ const BookProvider = ({ children }) => {
     );
 };
 
-export { BookProvider };
+export { UserProvider };
 export default BookContext;
