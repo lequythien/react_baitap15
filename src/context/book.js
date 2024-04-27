@@ -1,11 +1,13 @@
 import { createContext } from "react";
 import { fetchBooks, createBook, updateBook, deleteBook } from "../api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const BookContext = createContext();
 
-const BookProvider = ({ children }) => {
+const Provider = ({ children }) => {
     const [books, setBooks] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
     const handleDelete = async (id) => {
         const book = await deleteBook(id);
         console.log(book);
@@ -30,11 +32,22 @@ const BookProvider = ({ children }) => {
         setBooks(tams);
     }
 
+    const fetchData = async (setBooks) => {
+        const fetchedBooks = await fetchBooks();
+        setBooks(fetchedBooks);
+    };
+
+    useEffect(() => {
+        fetchData(setBooks);
+    }, [currentPage]);
+
     const valueShare = {
         onEdit: handleUpdate,
         onDelete: handleDelete,
         onCreate: handleCreate,
         getAllBooks,
+        currentPage,
+        setCurrentPage,
         books,
     };
 
@@ -43,5 +56,5 @@ const BookProvider = ({ children }) => {
     );
 };
 
-export { BookProvider };
+export { Provider };
 export default BookContext;

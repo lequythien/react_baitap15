@@ -13,7 +13,7 @@ const App = () => {
     return (
         <div className="wrapper">
             <div className="container">
-                <h1 className="text">READING BOOK</h1>
+                <h1 className="text">READING BOOK </h1>
                 <div className="window">
                     <BookList />
                 </div>
